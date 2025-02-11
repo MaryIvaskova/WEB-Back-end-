@@ -48,8 +48,8 @@ if __name__ == "__main__":
 
     # --- Основне завдання ---
     total_distance = calculate_distance(left_list, right_list)
-    print(f"✅ Загальна сума відстаней: {total_distance}")
+    print(f"Загальна сума відстаней: {total_distance}")
 
     # --- EXTRA TASK (Коефіцієнт схожості) ---
     similarity_score = calculate_similarity_score(left_list, right_list)
-    print(f"🎯 Коефіцієнт схожості: {similarity_score}")
+    print(f"Коефіцієнт схожості: {similarity_score}")

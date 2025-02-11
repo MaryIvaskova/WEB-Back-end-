@@ -1,45 +1,72 @@
-def is_safe_report(report):
+def is_safe(report):
+    """
+    Перевіряє, чи список чисел є "безпечним".
+    
+    Умови:
+    1. Всі числа повинні бути або зростаючими, або спадними.
+    2. Різниця між сусідніми числами повинна бути від 1 до 3 включно.
 
-    # Перевіряємо на монотонність (зростаючий або спадаючий порядок)
-    is_increasing = all(report[i] < report[i + 1] for i in range(len(report) - 1))
-    is_decreasing = all(report[i] > report[i + 1] for i in range(len(report) - 1))
+    :param report: список чисел (один рядок із файлу)
+    :return: True, якщо звіт безпечний, False - якщо ні
+    """
+    increasing = all(report[i] < report[i + 1] for i in range(len(report) - 1))  # Чи всі числа зростають?
+    decreasing = all(report[i] > report[i + 1] for i in range(len(report) - 1))  # Чи всі числа спадають?
 
-    if not (is_increasing or is_decreasing):
+    if not (increasing or decreasing):  # Якщо не зростає і не спадає - не безпечний
         return False
 
-    # Перевіряємо різницю між сусідніми рівнями
-    for i in range(len(report) - 1):
-        diff = abs(report[i] - report[i + 1])
-        if diff < 1 or diff > 3:
-            return False
-
-    return True
+    # Перевіряємо, чи всі різниці між сусідніми числами знаходяться в межах 1-3
+    return all(1 <= abs(report[i] - report[i + 1]) <= 3 for i in range(len(report) - 1))
 
 
-def analyze_reports(file_path):
+def can_become_safe(report):
     """
-    Аналізує звіти у файлі та визначає кількість безпечних рядків.
+    EXTRA TASK: Перевіряє, чи можна зробити звіт безпечним видаленням одного рівня.
+
+    :param report: список чисел
+    :return: True, якщо видалення 1 рівня робить звіт безпечним, False - якщо ні
     """
-    safe_count = 0
-
-    # Відкриваємо файл через open
-    file = open(file_path, 'r')
-    for line in file:
-        # Преобразуємо рядок у список чисел
-        report = list(map(int, line.strip().split()))
-
-        # Перевіряємо, чи рядок є "безпечним"
-        if is_safe_report(report):
-            safe_count += 1
-    file.close()  # Закриваємо файл
-    return safe_count
+    for i in range(len(report)):
+        new_report = report[:i] + report[i+1:]  # Видаляємо один рівень
+        if is_safe(new_report):  # Перевіряємо, чи став звіт безпечним
+            return True
+    return False
 
 
-if __name__ == "__main__":
-    input_file = "./WEB-Back-end-/Lab_2.2/input_2.txt"  # Шлях до файлу
+def count_safe_reports(file_path):
+    """
+    Читає файл через open() та підраховує кількість "безпечних" звітів.
+
+    :param file_path: шлях до файлу
+    :return: (кількість безпечних звітів, кількість "виправлених" звітів)
+    """
+    safe_count = 0  # Лічильник безпечних звітів
+    improved_safe_count = 0  # Лічильник виправлених звітів
 
     try:
-        safe_reports = analyze_reports(input_file)
-        print(f"Кількість безпечних звітів: {safe_reports}")
+        file = open(file_path, 'r')  # Відкриваємо файл через open()
+        for line in file:
+            numbers = list(map(int, line.split()))  # Перетворюємо рядок у список чисел
+            if is_safe(numbers):  # Перевіряємо, чи безпечний звіт
+                safe_count += 1  # Збільшуємо лічильник
+            elif can_become_safe(numbers):  # Перевіряємо, чи можна зробити безпечним
+                improved_safe_count += 1
+
+        file.close()  # Закриваємо файл вручну після зчитування
+        return safe_count, safe_count + improved_safe_count  # Повертаємо обидва значення
+
     except FileNotFoundError:
-        print(f"Файл {input_file} не знайдено.")
+        print(f"⚠️ Файл не знайдено: {file_path}")
+        return None, None  # Якщо файл не знайдено
+
+
+# --- Основна програма ---
+file_path = "./WEB-Back-end-/Lab_2.2/input_2.txt"  # Шлях до файлу
+
+# Підраховуємо кількість безпечних звітів
+safe_reports, improved_safe_reports = count_safe_reports(file_path)
+
+# Виводимо результат
+if safe_reports is not None:
+    print(f" Кількість безпечних звітів: {safe_reports}")
+    print(f" Кількість звітів, які стали безпечними після виправлення: {improved_safe_reports}")
