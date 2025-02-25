@@ -35,7 +35,7 @@ def calculate_total_score(file_path):
 
 # --- Основна програма ---
 if __name__ == "__main__":
-    file_path = "./WEB-Back-end-/Lab_6/input.txt"  # Шлях до файлу
+    file_path = "./WEB-Back-end-/lab_06/input.txt"  # Шлях до файлу
 
     # Обчислюємо загальну кількість очок
     total_score = calculate_total_score(file_path)
@@ -43,3 +43,5 @@ if __name__ == "__main__":
     # Виводимо результат
     if total_score is not None:
         print(f"Загальна кількість очок: {total_score}")
+
+#Загальна кількість очок: 8933

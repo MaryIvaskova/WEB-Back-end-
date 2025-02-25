@@ -81,7 +81,7 @@ def count_safe_reports(file_path):
 
 # --- Основна програма ---
 if __name__ == "__main__":
-    file_path = "./WEB-Back-end-/Lab_2/input.txt"  # Шлях до файлу
+    file_path = "./WEB-Back-end-/lab_02/input.txt"  # Шлях до файлу
 
     # Підраховуємо кількість безпечних звітів
     safe_reports, improved_safe_reports = count_safe_reports(file_path)
@@ -89,3 +89,6 @@ if __name__ == "__main__":
     if safe_reports is not None:
         print(f"Кількість безпечних звітів: {safe_reports}")
         print(f"Extra - Кількість звітів, які стали безпечними після виправлення: {improved_safe_reports}")
+
+#Кількість безпечних звітів: 218
+# Extra - Кількість звітів, які стали безпечними після виправлення: 290

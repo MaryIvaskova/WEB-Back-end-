@@ -58,7 +58,7 @@ def calculate_similarity_score(left_list, right_list):
 
 # --- Основна програма ---
 if __name__ == "__main__":
-    file_path = "./WEB-Back-end-/Lab_1/input.txt"  # Шлях до файлу
+    file_path = "./WEB-Back-end-/lab_01/input.txt"  # Шлях до файлу
 
     # Зчитуємо списки з файлу
     left_list, right_list = read_input(file_path)
@@ -71,3 +71,5 @@ if __name__ == "__main__":
         # --- EXTRA TASK ---
         similarity_score = calculate_similarity_score(left_list, right_list)
         print(f"Extra - Коефіцієнт схожості: {similarity_score}")
+        #Загальна сума відстаней: 1660292 
+        # Extra - Коефіцієнт схожості: 22776016

@@ -103,7 +103,7 @@ def process_games(file_path):
 
 # --- Основна програма ---
 if __name__ == "__main__":
-    file_path = "./WEB-Back-end-/Lab_5/input.txt"  # Шлях до файлу
+    file_path = "./WEB-Back-end-/lab_05/input.txt"  # Шлях до файлу
 
     # Обчислюємо результати
     sum_possible_ids, sum_power_sets = process_games(file_path)
@@ -112,3 +112,6 @@ if __name__ == "__main__":
     if sum_possible_ids is not None:
         print(f"Сума ID можливих ігор: {sum_possible_ids}")
         print(f"Extra - Сума потужностей мінімальних наборів: {sum_power_sets}")
+
+#Сума ID можливих ігор: 2810
+#Extra - Сума потужностей мінімальних наборів: 69110

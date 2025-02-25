@@ -85,7 +85,7 @@ def calculate_directory_sizes(fs_tree):
 
 # --- Основна програма ---
 if __name__ == "__main__":
-    file_path = "./WEB-Back-end-/Lab_4/input.txt"  # Шлях до файлу
+    file_path = "./WEB-Back-end-/lab_04/input.txt"  # Шлях до файлу
 
     # Парсимо файлову систему
     fs_tree = parse_terminal_output(file_path)
@@ -97,3 +97,4 @@ if __name__ == "__main__":
         total_filtered_size = sum(filtered_sizes.values())
 
         print(f"Сума розмірів директорій ≤ 100000: {total_filtered_size}")
+        #Сума розмірів директорій ≤ 100000: 1453349

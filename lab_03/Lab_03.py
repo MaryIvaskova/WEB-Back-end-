@@ -65,7 +65,7 @@ def calculate_calibration_sum(file_path):
 
 
 # --- Основна програма ---
-file_path = "./WEB-Back-end-/Lab_3/input.txt"  # Шлях до файлу
+file_path = "./WEB-Back-end-/lab_03/input.txt"  # Шлях до файлу
 
 # Обчислюємо суму калібрувальних значень
 sum_main, sum_extra = calculate_calibration_sum(file_path)
@@ -74,3 +74,6 @@ sum_main, sum_extra = calculate_calibration_sum(file_path)
 if sum_main is not None:
     print(f" Сума калібрувальних значень (основне завдання): {sum_main}")
     print(f" - EXTRA Сума калібрувальних значень : {sum_extra}")
+
+# Сума калібрувальних значень (основне завдання): 55538
+# EXTRA Сума калібрувальних значень : 54868
