@@ -1,21 +1,44 @@
+import re  # Імпортуємо модуль для роботи з регулярними виразами
+
+def read_input(file_path):
+    """
+    Зчитує список звітів із файлу.
+
+    :param file_path: шлях до файлу
+    :return: список списків чисел (рівнів)
+    """
+    reports = []
+    
+    try:
+        with open(file_path, "r") as file:
+            for line in file:
+                numbers = list(map(int, re.findall(r"-?\d+", line)))  # Витягуємо всі числа
+                if numbers:  # Додаємо лише непорожні рядки
+                    reports.append(numbers)
+        return reports
+
+    except FileNotFoundError:
+        print(f"⚠️ Файл не знайдено: {file_path}")
+        return None
+
+
 def is_safe(report):
     """
-    Перевіряє, чи список чисел є "безпечним".
-    
-    Умови:
-    1. Всі числа повинні бути або зростаючими, або спадними.
-    2. Різниця між сусідніми числами повинна бути від 1 до 3 включно.
+    Перевіряє, чи звіт безпечний.
 
-    :param report: список чисел (один рядок із файлу)
+    Умови:
+    1. Всі рівні або зростають, або спадають.
+    2. Різниця між сусідніми рівнями повинна бути від 1 до 3 включно.
+
+    :param report: список чисел (рівнів)
     :return: True, якщо звіт безпечний, False - якщо ні
     """
-    increasing = all(report[i] < report[i + 1] for i in range(len(report) - 1))  # Чи всі числа зростають?
-    decreasing = all(report[i] > report[i + 1] for i in range(len(report) - 1))  # Чи всі числа спадають?
+    increasing = all(report[i] < report[i + 1] for i in range(len(report) - 1))
+    decreasing = all(report[i] > report[i + 1] for i in range(len(report) - 1))
 
     if not (increasing or decreasing):  # Якщо не зростає і не спадає - не безпечний
         return False
 
-    # Перевіряємо, чи всі різниці між сусідніми числами знаходяться в межах 1-3
     return all(1 <= abs(report[i] - report[i + 1]) <= 3 for i in range(len(report) - 1))
 
 
@@ -23,8 +46,8 @@ def can_become_safe(report):
     """
     EXTRA TASK: Перевіряє, чи можна зробити звіт безпечним видаленням одного рівня.
 
-    :param report: список чисел
-    :return: True, якщо видалення 1 рівня робить звіт безпечним, False - якщо ні
+    :param report: список чисел (рівнів)
+    :return: True, якщо після видалення одного рівня звіт стає безпечним, False - якщо ні
     """
     for i in range(len(report)):
         new_report = report[:i] + report[i+1:]  # Видаляємо один рівень
@@ -35,38 +58,34 @@ def can_become_safe(report):
 
 def count_safe_reports(file_path):
     """
-    Читає файл через open() та підраховує кількість "безпечних" звітів.
+    Читає файл через open() та підраховує кількість безпечних звітів.
 
     :param file_path: шлях до файлу
     :return: (кількість безпечних звітів, кількість "виправлених" звітів)
     """
+    reports = read_input(file_path)
+    if reports is None:
+        return None, None
+
     safe_count = 0  # Лічильник безпечних звітів
     improved_safe_count = 0  # Лічильник виправлених звітів
 
-    try:
-        file = open(file_path, 'r')  # Відкриваємо файл через open()
-        for line in file:
-            numbers = list(map(int, line.split()))  # Перетворюємо рядок у список чисел
-            if is_safe(numbers):  # Перевіряємо, чи безпечний звіт
-                safe_count += 1  # Збільшуємо лічильник
-            elif can_become_safe(numbers):  # Перевіряємо, чи можна зробити безпечним
-                improved_safe_count += 1
+    for report in reports:
+        if is_safe(report):
+            safe_count += 1  # Додаємо, якщо звіт безпечний
+        elif can_become_safe(report):
+            improved_safe_count += 1  # Додаємо, якщо можна зробити безпечним
 
-        file.close()  # Закриваємо файл вручну після зчитування
-        return safe_count, safe_count + improved_safe_count  # Повертаємо обидва значення
-
-    except FileNotFoundError:
-        print(f"⚠️ Файл не знайдено: {file_path}")
-        return None, None  # Якщо файл не знайдено
+    return safe_count, safe_count + improved_safe_count
 
 
 # --- Основна програма ---
-file_path = "./WEB-Back-end-/Lab_2/input.txt"  # Шлях до файлу
+if __name__ == "__main__":
+    file_path = "./WEB-Back-end-/Lab_2/input.txt"  # Шлях до файлу
 
-# Підраховуємо кількість безпечних звітів
-safe_reports, improved_safe_reports = count_safe_reports(file_path)
+    # Підраховуємо кількість безпечних звітів
+    safe_reports, improved_safe_reports = count_safe_reports(file_path)
 
-# Виводимо результат
-if safe_reports is not None:
-    print(f" Кількість безпечних звітів: {safe_reports}")
-    print(f" Кількість звітів, які стали безпечними після виправлення: {improved_safe_reports}")
+    if safe_reports is not None:
+        print(f"Кількість безпечних звітів: {safe_reports}")
+        print(f"Extra - Кількість звітів, які стали безпечними після виправлення: {improved_safe_reports}")

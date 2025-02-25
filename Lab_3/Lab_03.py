@@ -73,4 +73,4 @@ sum_main, sum_extra = calculate_calibration_sum(file_path)
 # Виводимо результат
 if sum_main is not None:
     print(f" Сума калібрувальних значень (основне завдання): {sum_main}")
-    print(f" Сума калібрувальних значень (EXTRA TASK): {sum_extra}")
+    print(f" - EXTRA Сума калібрувальних значень : {sum_extra}")

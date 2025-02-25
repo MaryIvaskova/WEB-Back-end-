@@ -1,3 +1,5 @@
+import os  # Імпортуємо модуль для роботи з файловою системою
+
 def parse_terminal_output(file_path):
     """
     Парсить вивід терміналу та будує дерево директорій.
@@ -9,32 +11,31 @@ def parse_terminal_output(file_path):
     current_path = []  # Масив для збереження поточного шляху
 
     try:
-        file = open(file_path, "r")  # Відкриваємо файл через open()
-        for line in file:
-            parts = line.strip().split()
+        with open(file_path, "r") as file:
+            for line in file:
+                parts = line.strip().split()
 
-            if parts[0] == "$":  # Команда терміналу
-                if parts[1] == "cd":
-                    if parts[2] == "/":  # Перехід до кореня
-                        current_path = []
-                    elif parts[2] == "..":  # Перехід на рівень вище
-                        if current_path:
-                            current_path.pop()
-                    else:  # Перехід до нової директорії
-                        current_path.append(parts[2])
+                if parts[0] == "$":  # Команда терміналу
+                    if parts[1] == "cd":
+                        if parts[2] == "/":  # Перехід до кореня
+                            current_path = []
+                        elif parts[2] == "..":  # Перехід на рівень вище
+                            if current_path:
+                                current_path.pop()
+                        else:  # Перехід до нової директорії
+                            current_path.append(parts[2])
 
-            elif parts[0] == "dir":  # Виявлено директорію
-                dir_name = parts[1]
-                current_dir = get_nested_dir(fs_tree, current_path)
-                current_dir[dir_name] = {}
+                elif parts[0] == "dir":  # Виявлено директорію
+                    dir_name = parts[1]
+                    current_dir = get_nested_dir(fs_tree, current_path)
+                    current_dir[dir_name] = {}
 
-            else:  # Виявлено файл (формат: <розмір> <назва>)
-                file_size = int(parts[0])
-                file_name = parts[1]
-                current_dir = get_nested_dir(fs_tree, current_path)
-                current_dir[file_name] = file_size
+                else:  # Виявлено файл (формат: <розмір> <назва>)
+                    file_size = int(parts[0])
+                    file_name = parts[1]
+                    current_dir = get_nested_dir(fs_tree, current_path)
+                    current_dir[file_name] = file_size
 
-        file.close()  # Закриваємо файл
         return fs_tree
 
     except FileNotFoundError:
@@ -56,16 +57,15 @@ def get_nested_dir(fs_tree, path):
     return current
 
 
-def calculate_directory_sizes(fs_tree, path="/"):
+def calculate_directory_sizes(fs_tree):
     """
     Рекурсивно обчислює розмір кожної директорії.
 
     :param fs_tree: дерево файлової системи
-    :param path: поточний шлях
     :return: словник {директорія: розмір}
     """
     sizes = {}
-    
+
     def helper(node, full_path):
         total_size = 0
         for name, value in node.items():
@@ -84,19 +84,16 @@ def calculate_directory_sizes(fs_tree, path="/"):
 
 
 # --- Основна програма ---
-file_path = "./WEB-Back-end-/Lab_4/input.txt"  # Шлях до файлу
+if __name__ == "__main__":
+    file_path = "./WEB-Back-end-/Lab_4/input.txt"  # Шлях до файлу
 
-# Парсимо файлову систему
-fs_tree = parse_terminal_output(file_path)
+    # Парсимо файлову систему
+    fs_tree = parse_terminal_output(file_path)
 
-if fs_tree:
-    # Обчислюємо розміри директорій
-    dir_sizes = calculate_directory_sizes(fs_tree)
+    if fs_tree:
+        # --- Основне завдання ---
+        dir_sizes = calculate_directory_sizes(fs_tree)
+        filtered_sizes = {k: v for k, v in dir_sizes.items() if v <= 100000}
+        total_filtered_size = sum(filtered_sizes.values())
 
-    # Фільтруємо директорії з розміром ≤ 100000
-    filtered_sizes = {k: v for k, v in dir_sizes.items() if v <= 100000}
-
-    # Обчислюємо загальну суму
-    total_size = sum(filtered_sizes.values())
-
-    print(f"Сума розмірів директорій ≤ 100000: {total_size}")
+        print(f"Сума розмірів директорій ≤ 100000: {total_filtered_size}")
