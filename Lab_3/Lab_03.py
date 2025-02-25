@@ -65,7 +65,7 @@ def calculate_calibration_sum(file_path):
 
 
 # --- Основна програма ---
-file_path = "./WEB-Back-end-/Lab_3.2/input_3.txt"  # Шлях до файлу
+file_path = "./WEB-Back-end-/Lab_3/input.txt"  # Шлях до файлу
 
 # Обчислюємо суму калібрувальних значень
 sum_main, sum_extra = calculate_calibration_sum(file_path)

@@ -61,7 +61,7 @@ def count_safe_reports(file_path):
 
 
 # --- Основна програма ---
-file_path = "./WEB-Back-end-/Lab_2.2/input_2.txt"  # Шлях до файлу
+file_path = "./WEB-Back-end-/Lab_2/input.txt"  # Шлях до файлу
 
 # Підраховуємо кількість безпечних звітів
 safe_reports, improved_safe_reports = count_safe_reports(file_path)

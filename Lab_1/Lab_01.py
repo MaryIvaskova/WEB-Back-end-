@@ -34,7 +34,7 @@ def calculate_similarity_score(left_list, right_list):
 # --- Основна програма ---
 if __name__ == "__main__":
     # Зчитуємо списки з файлу
-    file_path = "./WEB-Back-end-/Lab_1.2/input_1.txt"  # Файл із числами
+    file_path = "./WEB-Back-end-/Lab_1/input.txt"  # Файл із числами
 
     left_list = []
     right_list = []

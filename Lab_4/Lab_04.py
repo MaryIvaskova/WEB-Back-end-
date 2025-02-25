@@ -84,7 +84,7 @@ def calculate_directory_sizes(fs_tree, path="/"):
 
 
 # --- Основна програма ---
-file_path = "./WEB-Back-end-/Lab_4.2/input_4.txt"  # Шлях до файлу
+file_path = "./WEB-Back-end-/Lab_4/input.txt"  # Шлях до файлу
 
 # Парсимо файлову систему
 fs_tree = parse_terminal_output(file_path)
