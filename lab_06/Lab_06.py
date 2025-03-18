@@ -5,6 +5,11 @@ OUTCOME_SCORE = {
     ("B", "X"): 0, ("B", "Y"): 3, ("B", "Z"): 6,  # Paper vs (Rock, Paper, Scissors)
     ("C", "X"): 6, ("C", "Y"): 0, ("C", "Z"): 3   # Scissors vs (Rock, Paper, Scissors)
 }
+"""
+("A", "X") означає, що суперник вибрав “A” (Камінь), а ми вибрали “X” (Камінь). Це нічия (3 очки).
+("A", "Y") означає, що суперник вибрав “A” (Камінь), а ми вибрали “Y” (Папір). Це перемога (6 очок).
+("A", "Z") означає, що суперник вибрав “A” (Камінь), а ми вибрали “Z” (Ножиці). Це поразка (0 очок).
+"""
 
 def calculate_total_score(file_path):
     """
@@ -13,7 +18,7 @@ def calculate_total_score(file_path):
     :param file_path: Шлях до файлу зі стратегією гри
     :return: Загальна кількість очок
     """
-    total_score = 0
+    total_score = 0 #зміна для підрахунок балів
 
     try:
         with open(file_path, "r") as file:  # Відкриваємо файл

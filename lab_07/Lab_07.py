@@ -1,6 +1,6 @@
-from collections import deque
+from collections import deque #deque (двостороння черга)
 
-def evolve_stones(stones, blinks, max_size=10**6):
+def evolve_stones(stones, blinks, max_size=10**6): #назва функції, що означає “еволюція каменів”. stones – вхідний список каменів (початкові значення).blinks – кількість “моргань” (ітерацій), за які камені змінюються. max_size=10**6 – обмеження на кількість каменів, щоб програма не зависала при занадто великій кількості обчислень.
     """
     Виконує зміни каменів протягом вказаної кількості моргань.
     
@@ -9,11 +9,11 @@ def evolve_stones(stones, blinks, max_size=10**6):
     :param max_size: Максимальна кількість каменів для зупинки
     :return: Кількість каменів після заданої кількості моргань
     """
-    stones = deque(stones)  # Використовуємо двосторонню чергу для ефективності
+    stones = deque(stones)  # перретворюємо каміня у двосторонню чергу для ефективності
     
     for _ in range(blinks):
         new_stones = deque()
-        while stones:
+        while stones: #Умовний цикл, який буде працювати, поки stones містить елементи
             stone = stones.popleft()  # Беремо перший камінь
 
             if stone == 0:
